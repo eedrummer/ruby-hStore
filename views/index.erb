@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <title>hData Record</title>
+    </head>
+    <body>
+        <h1 id="hdata_record">hData Record</h1>
+        <h2>Extensions</h2>
+        <ul>
+            <% @record.extensions.each do |e| %>
+            <li>Type: <%= e.type_id %> Requirement: <%= e.requirement %></li>
+            <% end %>
+        </ul>
+        <h2>Sections</h2>
+        <ul>
+            <% @record.sections.each do |s| %>
+            <li>Name: <%= s.name %> Path: <%= s.path %></li>
+            <% end %>
+        </ul>
+    </body>
+</html>
