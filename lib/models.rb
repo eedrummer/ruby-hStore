@@ -16,6 +16,10 @@ class Record
     def path_exists?(path)
       @target.any? {|section| section.path == path}
     end
+    
+    def find_by_path(path)
+      @target.select {|section| section.path == path}.first
+    end
   end
 end
 

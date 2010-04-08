@@ -25,5 +25,11 @@ class RecordTest < Test::Unit::TestCase
       assert @record.sections.path_exists?('allergies')
       assert !@record.sections.path_exists?('person_information')
     end
+    
+    should 'be able to find a section by path' do
+      section = @record.sections.find_by_path('allergies')
+      assert section
+      assert_equal 'Allergies', section.name
+    end
   end
 end
