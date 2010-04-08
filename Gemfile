@@ -2,7 +2,7 @@ source :gemcutter
 source 'http://gems.github.com'
 
 # For the web interface
-gem 'sinatra'
+gem 'sinatra', :require => 'sinatra/base'
 gem 'emk-sinatra-url-for', :require => 'sinatra/url_for'
 gem 'builder'
 

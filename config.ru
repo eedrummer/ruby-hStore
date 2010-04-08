@@ -20,5 +20,6 @@ require 'lib/models'
 # Load the web request handlers
 require 'lib/document'
 require 'lib/root'
+require 'lib/hstore'
 
-Sinatra::Application.run!(:root => File.dirname(__FILE__))
+HStore::Application.run!(:root => File.dirname(__FILE__))

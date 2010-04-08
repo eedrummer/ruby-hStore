@@ -25,16 +25,16 @@ require 'lib/models'
 
 # Load the web request handlers
 require 'lib/root'
-
-set :environment, :test
-set :root, File.join(File.dirname(__FILE__), '..')
-
+require 'lib/hstore'
 
 class HDataTest < Test::Unit::TestCase
   include Rack::Test::Methods
 
   def app
-    Sinatra::Application
+    app = HStore::Application
+    app.set :environment, :test
+    app.set :root, File.join(File.dirname(__FILE__), '..')
+    app
   end
   
   def test_truth
