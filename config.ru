@@ -21,6 +21,7 @@ require 'lib/models'
 require 'lib/document'
 require 'lib/root'
 require 'lib/section'
+require 'lib/document'
 require 'lib/hstore'
 
 HStore::Application.run!(:root => File.dirname(__FILE__))

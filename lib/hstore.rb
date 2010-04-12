@@ -4,5 +4,6 @@ module HStore
     
     include Root
     include SectionController
+    include Document
   end
 end
