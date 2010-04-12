@@ -64,4 +64,9 @@ class SectionDocument
     self.file_id = grid.put(content, :filename => filename, :content_type => content_type)
     self.save!
   end
+  
+  def grid_document
+    grid = Mongo::Grid.new(self.class.db)
+    grid.get(BSON::ObjectID.from_string(self.file_id))
+  end
 end
