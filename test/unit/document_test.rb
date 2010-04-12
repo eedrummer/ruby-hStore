@@ -17,7 +17,7 @@ class DocumentTest < HDataTest
       get "/records/#{@record.id}/#{@section.path}/#{@doc.id}"
       assert last_response.ok?
       doc = Nokogiri::XML.parse(last_response.body)
-      product_element = doc.xpath('//allergy/product[text()="Cheese"]')
+      product_element = doc.xpath('//a:allergy/a:product[text()="product0"]', 'a' => "http://projecthdata.org/hdata/schemas/2009/06/allergy")
       assert !product_element.empty?
     end
     
