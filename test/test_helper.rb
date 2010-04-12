@@ -25,6 +25,7 @@ require 'lib/models'
 
 # Load the web request handlers
 require 'lib/root'
+require 'lib/section'
 require 'lib/hstore'
 
 class HDataTest < Test::Unit::TestCase

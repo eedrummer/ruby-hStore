@@ -16,6 +16,7 @@ class SectionTest < HDataTest
     should 'allow the delete of a section' do
       delete "/records/#{@record.id}/allergies"
       assert_equal 204, last_response.status
+      @record.reload
       assert !@record.sections.path_exists?('allergies')
     end
     
@@ -24,8 +25,8 @@ class SectionTest < HDataTest
       post "/records/#{@record.id}/allergies", {:type => 'document', :content => upload_file}
       assert_equal 201, last_response.status
       section = @record.sections.find_by_path('allergies')
-      assert_equal 1, section.documents.count
-      assert_equal "http://localhost:4567/allergies/#{section.documents.first.id}", last_response.body
+      assert_equal 1, section.section_documents.count
+      assert_equal "/records/#{@record.id}/allergies/#{section.section_documents.first.id}", last_response.body
     end
     
   end

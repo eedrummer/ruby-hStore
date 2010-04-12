@@ -33,3 +33,18 @@ class RecordTest < Test::Unit::TestCase
     end
   end
 end
+
+class SectionDocumentTest < Test::Unit::TestCase
+  context 'A Section Documend' do
+    should 'save a document to GridFS' do
+      doc = SectionDocument.new(:title => 'Test Document')
+      doc.create_document('Text of a test document', 'test.txt', 'text/plain')
+      
+      file = Mongo::Grid.new(SectionDocument.db).get(BSON::ObjectID.from_string(doc.file_id))
+      assert file
+      assert_equal 'Text of a test document', file.data
+      assert_equal 'test.txt', file.filename
+      assert_equal 'text/plain', file.content_type
+    end
+  end
+end

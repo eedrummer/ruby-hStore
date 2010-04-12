@@ -20,6 +20,7 @@ require 'lib/models'
 # Load the web request handlers
 require 'lib/document'
 require 'lib/root'
+require 'lib/section'
 require 'lib/hstore'
 
 HStore::Application.run!(:root => File.dirname(__FILE__))
