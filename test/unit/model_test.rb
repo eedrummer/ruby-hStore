@@ -57,5 +57,16 @@ class SectionDocumentTest < Test::Unit::TestCase
       assert_equal 'test.txt', file.filename
       assert_equal 'text/plain', file.content_type
     end
+    
+    should 'remove the file from GridFS when it is destroyed' do
+      doc = SectionDocument.new(:title => 'Test Document')
+      doc.create_document('Text of a test document', 'test.txt', 'text/plain')
+      
+      file_id = doc.file_id
+      doc.destroy
+      assert_raise Mongo::GridFileNotFound do
+        Mongo::Grid.new(SectionDocument.db).get(BSON::ObjectID.from_string(file_id))
+      end
+    end
   end
 end
