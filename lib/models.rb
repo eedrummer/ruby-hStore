@@ -56,6 +56,8 @@ class SectionDocument
   
   belongs_to_related :section
   
+  before_destroy :delete_grid_file
+  
   field :title
   field :file_id
   
@@ -68,5 +70,10 @@ class SectionDocument
   def grid_document
     grid = Mongo::Grid.new(self.class.db)
     grid.get(BSON::ObjectID.from_string(self.file_id))
+  end
+  
+  def delete_grid_file
+    grid = Mongo::Grid.new(self.class.db)
+    grid.delete(BSON::ObjectID.from_string(self.file_id))
   end
 end
