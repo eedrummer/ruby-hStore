@@ -13,6 +13,18 @@ module HStore
           end
         end
         
+        put '/records/:id/*/:doc_id' do
+          @record = Record.find(params[:id])
+          @section = @record.sections.find_by_path(params[:splat].first)
+          if @section
+            doc.replace_grid_file(params[:content][:tempfile], params[:content][:filename], params[:content][:type])
+            doc.save
+            status 200
+          else
+            status 404
+          end
+        end
+        
         delete '/records/:id/*/:doc_id' do
           @record = Record.find(params[:id])
           @section = @record.sections.find_by_path(params[:splat].first)
