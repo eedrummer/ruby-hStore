@@ -25,10 +25,11 @@ module HStore
           builder :root
         end
 
-        post '/records/' do
+        post '/records' do
           record = Record.new
           record.save
-          status 201, url_for("/records/#{@record.id}")
+          status 201
+          url_for("/records/#{record.id}")
         end
 
         def check_params

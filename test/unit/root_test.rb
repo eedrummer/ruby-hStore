@@ -6,6 +6,14 @@ class RootTest < HDataTest
       @record = Record.create
     end
     
+    should 'allow the creation of a record with a POST' do
+      post "/records"
+      assert_equal 201, last_response.status
+      record_id = last_response.body.sub('/records/', '')
+      assert Record.find(record_id)
+    end
+      
+    
     should "return a response to a GET request" do
       get "/records/#{@record.id}"
       assert last_response.ok?
