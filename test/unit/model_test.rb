@@ -68,5 +68,17 @@ class SectionDocumentTest < Test::Unit::TestCase
         Mongo::Grid.new(SectionDocument.db).get(BSON::ObjectID.from_string(file_id))
       end
     end
+    
+    should 'be able to replace the contents of a GridFS file' do
+      doc = SectionDocument.new(:title => 'Test Document')
+      doc.create_document('Text of a test document', 'test.txt', 'text/plain')
+      doc.replace_grid_file('<switch>changed</switch>', 'test.xml', 'application/xml')
+      
+      file = doc.grid_document
+      assert file
+      assert_equal '<switch>changed</switch>', file.data
+      assert_equal 'test.xml', file.filename
+      assert_equal 'application/xml', file.content_type
+    end
   end
 end

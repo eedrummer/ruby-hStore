@@ -76,4 +76,9 @@ class SectionDocument
     grid = Mongo::Grid.new(self.class.db)
     grid.delete(BSON::ObjectID.from_string(self.file_id))
   end
+  
+  def replace_grid_file(content, filename, content_type)
+    self.delete_grid_file
+    self.create_document(content, filename, content_type)
+  end
 end
