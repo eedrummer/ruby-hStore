@@ -7,8 +7,8 @@ gem 'emk-sinatra-url-for', :require => 'sinatra/url_for'
 gem 'builder'
 
 gem 'bson_ext'
-gem 'mongo', '0.20.1'
-gem 'mongoid', :git => 'http://github.com/durran/mongoid.git'
+gem 'mongo'
+gem 'mongoid', '2.0.0.beta6'
 
 group :test do
   gem 'rack-test', :require => 'rack/test'
