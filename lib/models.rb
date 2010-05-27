@@ -2,6 +2,8 @@ class Record
   include Mongoid::Document
   include Mongoid::Timestamps
   
+  embeds_one :discovery_authorization_service
+  
   embeds_many :extensions do
     def find_by_type_id(type_id)
      @target.select {|extension| extension.type_id == type_id}.first
@@ -20,6 +22,18 @@ class Record
     def find_by_path(path)
       @target.select {|section| section.path == path}.first
     end
+  end
+  
+  def to_resource_descriptor
+    rd = {'subject' => "http://localhost:4567/records/#{id}",
+          'property' => [{"http://uma/host/title" => "hStore for patient #{id}"}]}
+    links = []
+    sections.each do |section|
+      links << {'href' => "http://localhost:4567/records/#{id}/#{section.path}", 'title' => section.name}
+    end
+    
+    rd['link'] = {"http://uma/am/resource" => links}
+    rd.to_json
   end
 end
 
@@ -48,6 +62,20 @@ class Section
 
   validates_uniqueness_of :path, :message => "A section already exists at that path"
   validates_presence_of :name, :path, :type_id, :message => "A section must specify a name, type_id and path"
+end
+
+class DiscoveryAuthorizationService
+  include Mongoid::Document
+
+  embedded_in :record, :inverse_of => :das
+  
+  field :das_uri
+  field :host_token_uri
+  field :host_user_uri
+  field :host_resource_details_uri
+  field :host_token_validation_url
+  field :client_id
+  field :access_token
 end
 
 class SectionDocument

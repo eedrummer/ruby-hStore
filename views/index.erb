@@ -18,5 +18,12 @@
             <li>Name: <%= s.name %> Path: <%= s.path %></li>
             <% end %>
         </ul>
+        
+        <h1>Register a DAS</h1>
+        <form action="/records/<%= @record.id %>/add_das" method="POST">
+          <label for="das_url">URL of DAS:</label> 
+          <input type="text" size="30" id="das_url" name="das_url" /> 
+          <input type="submit" value="Register with DAS" /> 
+        </form>
     </body>
 </html>

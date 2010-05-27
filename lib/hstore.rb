@@ -4,6 +4,8 @@ module HStore
 
     include Root
     include Document
+    include DAS
     include SectionController
+    
   end
 end

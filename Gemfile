@@ -10,6 +10,8 @@ gem 'bson_ext'
 gem 'mongo'
 gem 'mongoid', '2.0.0.beta6'
 
+gem 'httparty'
+
 group :test do
   gem 'rack-test', :require => 'rack/test'
   gem 'thoughtbot-shoulda', :require => 'shoulda'
