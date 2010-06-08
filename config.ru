@@ -21,7 +21,6 @@ require 'lib/models'
 require 'lib/document'
 require 'lib/root'
 require 'lib/section'
-require 'lib/document'
 require 'lib/das'
 require 'lib/hstore'
 
