@@ -27,6 +27,7 @@ require 'lib/models'
 require 'lib/root'
 require 'lib/section'
 require 'lib/document'
+require 'lib/das'
 require 'lib/hstore'
 
 class HDataTest < Test::Unit::TestCase
