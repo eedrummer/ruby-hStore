@@ -1,0 +1,10 @@
+HTTP/1.0 200 OK
+Date: Thu, 10 Jun 2010 13:51:49 GMT
+Server: WSGIServer/0.1 Python/2.6.1
+Content-Length: 1124
+Content-Type: text/plain; charset=UTF-8
+
+{
+    "client_id": "test_client",
+    "session_id": "test_session"
+}

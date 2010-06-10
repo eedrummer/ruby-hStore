@@ -17,4 +17,5 @@ group :test do
   gem 'thoughtbot-shoulda', :require => 'shoulda'
   gem 'nokogiri'
   gem 'awesome_print', :require => 'ap'
+  gem 'fakeweb'
 end

@@ -35,7 +35,7 @@ module HStore
                                           :body => {"client_id"  => das.client_id,
                                                     "code" => code,
                                                     'type' => 'web_server',
-                                                    'redirect_uri' => "http://localhost:4567/records/#{id}/am_redirect",
+                                                    'redirect_uri' => "http://localhost:4567/records/#{@record.id}/am_redirect",
                                                     'format' => 'json'
                                                     }))
           das.access_token = oauth_response['access_token']

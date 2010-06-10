@@ -1,0 +1,109 @@
+--- 
+hash: 1bb92469783fc56ff1b75c01a65baa7dc1e7dc2d
+sources: 
+- Rubygems: 
+    uri: http://gemcutter.org
+- Rubygems: 
+    uri: http://gems.github.com
+specs: 
+- builder: 
+    version: 2.1.2
+- i18n: 
+    version: 0.3.7
+- memcache-client: 
+    version: 1.8.3
+- tzinfo: 
+    version: 0.3.22
+- activesupport: 
+    version: 3.0.0.beta3
+- activemodel: 
+    version: 3.0.0.beta3
+- awesome_print: 
+    version: 0.2.1
+- bson: 
+    version: 1.0.2
+- bson_ext: 
+    version: 1.0.1
+- crack: 
+    version: 0.1.6
+- rack: 
+    version: 1.1.0
+- sinatra: 
+    version: "1.0"
+- emk-sinatra-url-for: 
+    version: 0.2.1
+- fakeweb: 
+    version: 1.2.8
+- httparty: 
+    version: 0.5.2
+- mongo: 
+    version: 1.0.2
+- will_paginate: 
+    version: 3.0.pre
+- mongoid: 
+    version: 2.0.0.beta6
+- nokogiri: 
+    version: 1.4.2
+- rack-test: 
+    version: 0.5.4
+- thoughtbot-shoulda: 
+    version: 2.10.2
+dependencies: 
+  sinatra: 
+    version: ">= 0"
+    group: 
+    - :default
+    require: 
+    - sinatra/base
+  emk-sinatra-url-for: 
+    version: ">= 0"
+    group: 
+    - :default
+    require: 
+    - sinatra/url_for
+  builder: 
+    version: ">= 0"
+    group: 
+    - :default
+  bson_ext: 
+    version: ">= 0"
+    group: 
+    - :default
+  mongo: 
+    version: ">= 0"
+    group: 
+    - :default
+  mongoid: 
+    version: = 2.0.0.beta6
+    group: 
+    - :default
+  httparty: 
+    version: ">= 0"
+    group: 
+    - :default
+  rack-test: 
+    version: ">= 0"
+    group: 
+    - :test
+    require: 
+    - rack/test
+  thoughtbot-shoulda: 
+    version: ">= 0"
+    group: 
+    - :test
+    require: 
+    - shoulda
+  nokogiri: 
+    version: ">= 0"
+    group: 
+    - :test
+  awesome_print: 
+    version: ">= 0"
+    group: 
+    - :test
+    require: 
+    - ap
+  fakeweb: 
+    version: ">= 0"
+    group: 
+    - :test
