@@ -1,6 +1,6 @@
 require 'rake'
 require 'rake/testtask'
-require 'metric_fu'
+#require 'metric_fu'
 
 test_files_pattern = 'test/**/*_test.rb'
 Rake::TestTask.new do |t|
