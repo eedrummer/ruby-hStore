@@ -31,33 +31,30 @@ class RootTest < HDataTest
       end
       
       should "allow the registration of a new extension" do
-        post "/records/#{@record.id}", {:type => 'extension', :typeId => 'http://projecthdata.org/hdata/schemas/2009/06/allergy', 
-                                        :requirement => 'mandatory'}
+        post "/records/#{@record.id}", {:type => 'extension', :extensionId => 'http://projecthdata.org/hdata/schemas/2009/06/allergy'}
         assert_equal 201, last_response.status
         @record.reload
-        extension = @record.extensions.find_by_type_id('http://projecthdata.org/hdata/schemas/2009/06/allergy')
+        extension = @record.extensions.find_by_extension_id('http://projecthdata.org/hdata/schemas/2009/06/allergy')
         assert extension
-        assert_equal 'mandatory', extension.requirement
       end
       
       should "not allow the registration of a duplicate extension" do
-        @record.extensions.create(:type_id  => 'http://projecthdata.org/hdata/schemas/2009/06/allergy', :requirement => 'mandatory')
-        post "/records/#{@record.id}", {:type => 'extension', :typeId => 'http://projecthdata.org/hdata/schemas/2009/06/allergy', 
-                   :requirement => 'mandatory'}
+        @record.extensions.create(:extension_id => 'http://projecthdata.org/hdata/schemas/2009/06/allergy')
+        post "/records/#{@record.id}", {:type => 'extension', :extensionId => 'http://projecthdata.org/hdata/schemas/2009/06/allergy'}
         assert_equal 409, last_response.status
       end
       
       should "allow the creation of a new section" do
-        @record.extensions.create(:type_id  => 'http://projecthdata.org/hdata/schemas/2009/06/allergy', :requirement => 'mandatory')
-        post "/records/#{@record.id}", {:type => 'section', :typeId => 'http://projecthdata.org/hdata/schemas/2009/06/allergy', 
+        @record.extensions.create(:extension_id  => 'http://projecthdata.org/hdata/schemas/2009/06/allergy')
+        post "/records/#{@record.id}", {:type => 'section', :extensionId => 'http://projecthdata.org/hdata/schemas/2009/06/allergy', 
                                         :path => 'allergies', :name => 'Allergies'}
         assert_equal 201, last_response.status
       end
     end
     
     should "provide a root.xml document describing the extensions and sections" do
-      @record.extensions.create(:type_id  => 'http://projecthdata.org/hdata/schemas/2009/06/allergy', :requirement => 'mandatory')
-      @record.sections.create(:name => 'Allergies', :path => 'allergies', :type_id  => 'http://projecthdata.org/hdata/schemas/2009/06/allergy')
+      @record.extensions.create(:extension_id => 'http://projecthdata.org/hdata/schemas/2009/06/allergy')
+      @record.sections.create(:name => 'Allergies', :path => 'allergies', :extension_id  => 'http://projecthdata.org/hdata/schemas/2009/06/allergy')
       
       get "/records/#{@record.id}/root.xml"
       assert last_response.ok?

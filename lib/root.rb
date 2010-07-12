@@ -39,10 +39,10 @@ module HStore
         end
 
         def handle_extension
-          if @record.extensions.type_id_registered?(params[:typeId])
+          if @record.extensions.extension_id_registered?(params[:extensionId])
             halt 409, "Extension with that type id already exists"
           else
-            extension = @record.extensions.create(:type_id => params[:typeId], :requirement => params[:requirement])
+            extension = @record.extensions.create(:extension_id => params[:extensionId])
             if extension.valid?
               status 201
             else
@@ -53,12 +53,12 @@ module HStore
         end
 
         def handle_section
-          extension = @record.extensions.find_by_type_id(params[:typeId])
+          extension = @record.extensions.find_by_extension_id(params[:extensionId])
           if extension
             if @record.sections.path_exists?(params[:path])
               halt 409, "A section already exists at that path"
             else
-              section = @record.sections.create(:name => params[:name], :path => params[:path], :type_id => params[:typeId])
+              section = @record.sections.create(:name => params[:name], :path => params[:path], :extension_id => params[:extensionId])
               if section.valid?
                 status 201
               else
@@ -66,7 +66,7 @@ module HStore
               end
             end
           else
-            halt 400, "Couldn't find the extension for the typeId specified"
+            halt 400, "Couldn't find the extension for the extensionId specified"
           end
         end
       end

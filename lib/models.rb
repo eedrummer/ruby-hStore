@@ -3,12 +3,12 @@ class Record
   include Mongoid::Timestamps
   
   embeds_many :extensions do
-    def find_by_type_id(type_id)
-     @target.select {|extension| extension.type_id == type_id}.first
+    def find_by_extension_id(extension_id)
+     @target.select {|extension| extension.extension_id == extension_id}.first
     end
 
-    def type_id_registered?(type_id)
-     @target.any? {|extension| extension.type_id == type_id}
+    def extension_id_registered?(extension_id)
+     @target.any? {|extension| extension.extension_id == extension_id}
     end
   end
   
@@ -28,11 +28,9 @@ class Extension
 
   embedded_in :record, :inverse_of => :extensions
 
-  field :type_id
-  field :requirement
+  field :extension_id
 
-  validates_format_of :requirement, :with  => /optional|mandatory/, :message => "Extension requirement must be optional or mandatory"
-  validates_presence_of :type_id, :requirement, :message => "An extension must specify a typeId and requirement"
+  validates_presence_of :extension_id, :message => "An extension must specify a extensionId"
 end
 
 class Section
@@ -42,12 +40,12 @@ class Section
   embedded_in :record, :inverse_of => :sections  
   has_many_related :section_documents
 
-  field :type_id
+  field :extension_id
   field :name
   field :path
 
   validates_uniqueness_of :path, :message => "A section already exists at that path"
-  validates_presence_of :name, :path, :type_id, :message => "A section must specify a name, type_id and path"
+  validates_presence_of :name, :path, :extension_id, :message => "A section must specify a name, extension_id and path"
 end
 
 class SectionDocument
