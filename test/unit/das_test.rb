@@ -6,6 +6,7 @@ class DASTest < HDataTest
       FakeWeb.register_uri(:get, "http://fakedas.local/.well-known/hostmeta", :response => 'test/fixtures/das_hostmeta.response')
       FakeWeb.register_uri(:post, "http://fakedas.local/host/resources", :response => 'test/fixtures/das_resource_details.response')
       FakeWeb.register_uri(:post, "http://fakedas.local/token", :response => 'test/fixtures/das_token.response')
+      FakeWeb.register_uri(:post, "http://fakedas.local/host/validate_token", :response => 'test/fixtures/das_failed_validation.response')
 
       @record = Record.create
       @record.extensions.create(:type_id  => 'http://projecthdata.org/hdata/schemas/2009/06/allergy', :requirement => 'mandatory')
@@ -30,6 +31,22 @@ class DASTest < HDataTest
       rec = Record.find(@record.id)
       assert_equal 302, last_response.status
       assert_equal 'super_sekret', rec.discovery_authorization_service.access_token
+    end
+    
+    should 'protect a resource' do
+      @record.create_discovery_authorization_service(:host_token_uri => 'http://fakedas.local/token', :client_id => 'test_client',
+                                                     :host_token_validation_url => "http://fakedas.local/host/validate_token", :access_token => '1234',
+                                                     :das_uri => "http://fakedas.local")
+      get "/records/#{@record.id}/allergies"
+      assert_equal 401, last_response.status
+    end
+
+    should 'protect a resource from a bad oauth token' do 
+      @record.create_discovery_authorization_service(:host_token_uri => 'http://fakedas.local/token', :client_id => 'test_client',
+                                                     :host_token_validation_url => "http://fakedas.local/host/validate_token", :access_token => '1234',
+                                                     :das_uri => "http://fakedas.local")
+      get "/records/#{@record.id}/allergies?oauth_token=garbage"
+      assert_equal 403, last_response.status
     end
   end
 end

@@ -1,0 +1,7 @@
+HTTP/1.0 403 Forbidden
+Date: Tue, 15 Jun 2010 19:30:54 GMT
+Server: WSGIServer/0.1 Python/2.6.1
+Content-Type: text/html; charset=UTF-8
+Content-Length: 13
+
+Invalid Token

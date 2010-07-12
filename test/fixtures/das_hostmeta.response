@@ -34,7 +34,7 @@ Content-Type: text/plain; charset=UTF-8
         ], 
         "http://kantarainitiative.org/confluence/display/uma/host_token_validation_uri": [
             {
-                "href": "http://fakedas.local/requester/validate_token"
+                "href": "http://fakedas.local/host/validate_token"
             }
         ], 
         "http://uma/host/user_uri": [

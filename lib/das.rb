@@ -42,6 +42,30 @@ module HStore
           das.save
           redirect "http://localhost:4567/records/#{@record.id}"
         end
+        
+        before do
+          md = request.path_info.match(/\/records\/([\w\d]+)/)
+          if md
+            @record = Record.find(md[1])
+            if @record && @record.discovery_authorization_service.try(:access_token).present?
+              if params[:oauth_token]
+                validate_request(params[:oauth_token], request.path_info)
+              else
+                halt 401, {'WWW-Authenticate' => @record.discovery_authorization_service.das_uri}, 'You must be authenticated to access this resource'
+              end
+            end
+          end
+        end
+        
+        def validate_request(oauth_token, uri_to_access)
+          oauth_response = HTTParty.post(@record.discovery_authorization_service.host_token_validation_url,
+                                         :body => {'access_token' => oauth_token,
+                                                   'resource_uri' => uri_to_access
+                                                  })
+          if oauth_response.code != 200
+            halt 403
+          end
+        end
       end
     end
   end

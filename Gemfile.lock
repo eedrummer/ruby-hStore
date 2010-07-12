@@ -25,9 +25,9 @@ specs:
 - bson_ext: 
     version: 1.0.1
 - crack: 
-    version: 0.1.6
+    version: 0.1.7
 - rack: 
-    version: 1.1.0
+    version: 1.2.1
 - sinatra: 
     version: "1.0"
 - emk-sinatra-url-for: 
@@ -35,7 +35,7 @@ specs:
 - fakeweb: 
     version: 1.2.8
 - httparty: 
-    version: 0.5.2
+    version: 0.6.0
 - mongo: 
     version: 1.0.2
 - will_paginate: 
