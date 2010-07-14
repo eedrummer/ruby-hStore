@@ -59,7 +59,8 @@ module HStore
             if @record.sections.path_exists?(params[:path])
               halt 409, "A section already exists at that path"
             else
-              section = @record.sections.create(:name => params[:name], :path => params[:path], :extension_id => params[:extensionId])
+              section = @record.sections.create(:name => params[:name], :path => params[:path], 
+						:extension_id => params[:extensionId])
               if section.valid?
                 status 201
               else
