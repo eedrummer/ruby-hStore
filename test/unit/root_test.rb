@@ -22,6 +22,7 @@ class RootTest < HDataTest
     should "not allow a PUT" do
       put "/records/#{@record.id}"
       assert_equal 405, last_response.status
+      assert_equal 'GET, HEAD, POST', last_response.headers['Allow']
     end
     
     context "when receiving a POST" do

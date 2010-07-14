@@ -8,6 +8,7 @@ module HStore
         end
 
         put '/records/:id' do
+	  headers 'Allow' => 'GET, HEAD, POST'
           status 405
           "You can't PUT at this level of the hData Record"
         end
