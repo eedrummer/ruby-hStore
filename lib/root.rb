@@ -10,7 +10,13 @@ module HStore
         put '/records/:id' do
 	  headers 'Allow' => 'GET, HEAD, POST'
           status 405
-          "You can't PUT at this level of the hData Record"
+          "PUT is undefined at this level of the hData Record"
+        end
+
+        delete '/records/:id' do
+	  headers 'Allow' => 'GET, HEAD, POST'
+          status 405
+          "DELETE is undefined at this level of the hData Record"
         end
 
         post '/records/:id' do

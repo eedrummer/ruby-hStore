@@ -14,7 +14,12 @@ class RootTest < HDataTest
       assert Record.find(record_id)
     end
       
-    
+    should "not allow a DELETE" do
+      delete "/records/#{@record.id}"
+      assert_equal 405, last_response.status
+      assert_equal 'GET, HEAD, POST', last_response.headers['Allow']
+    end
+
     should "return a response to a GET request" do
       get "/records/#{@record.id}"
       assert last_response.ok?
