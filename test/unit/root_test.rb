@@ -24,6 +24,12 @@ class RootTest < HDataTest
       get "/records/#{@record.id}"
       assert last_response.ok?
     end
+
+    should "get Atom if requested in Accept headers" do
+      get "/records/#{@record.id}", {}, {'HTTP_ACCEPT' => 'application/atom+xml'}
+      assert last_response.ok?
+      assert last_response.body.include?('<feed')
+    end
     
     should "not allow a PUT" do
       put "/records/#{@record.id}"

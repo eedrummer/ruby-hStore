@@ -4,7 +4,11 @@ module HStore
       mod.module_eval do
         get '/records/:id' do
           @record = Record.find(params[:id])
-          erb :index
+	  if request.env['HTTP_ACCEPT'] && request.env['HTTP_ACCEPT'].include?('application/atom+xml')
+	    builder :root_atom
+	  else
+	    erb :index
+	  end
         end
 
         put '/records/:id' do
