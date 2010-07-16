@@ -21,13 +21,13 @@ end
 require 'test/unit'
 
 # Set up the models
-require 'lib/models'
+Dir[File.dirname(__FILE__) + '/../lib/models/*.rb'].each {|file| require file }
 
-# Load the web request handlers
-require 'lib/root'
-require 'lib/section'
-require 'lib/document'
-require 'lib/hstore'
+# Load the web request handlers, order is significant
+require 'lib/controllers/document'
+require 'lib/controllers/root'
+require 'lib/controllers/section'
+require 'lib/controllers/hstore'
 
 class HDataTest < Test::Unit::TestCase
   include Rack::Test::Methods
