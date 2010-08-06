@@ -3,7 +3,7 @@ require 'test/test_helper'
 class NamespaceContextTest < Test::Unit::TestCase
   context "A NamespaceContext" do
     setup do
-      doc = fixture_file = File.new(File.join(File.dirname(__FILE__), '..', 'fixtures', 'allergy1.xml'))
+      fixture_file = File.new(File.join(File.dirname(__FILE__), '..', 'fixtures', 'allergy1.xml'))
       ng = Nokogiri::XML(fixture_file)
       @ctx = NamespaceContext.new(ng.root, 'a' => 'http://projecthdata.org/hdata/schemas/2009/06/allergy',
 				  'core' => 'http://projecthdata.org/hdata/schemas/2009/06/core')
