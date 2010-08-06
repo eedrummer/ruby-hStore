@@ -23,6 +23,8 @@ require 'test/unit'
 # Set up the models
 Dir[File.dirname(__FILE__) + '/../lib/models/*.rb'].each {|file| require file }
 
+require 'lib/namespace_context'
+
 # Load the web request handlers, order is significant
 require 'lib/controllers/document'
 require 'lib/controllers/root'
