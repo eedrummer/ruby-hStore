@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DocumentMetaData xmlns="http://projecthdata.org/hdata/schemas/2009/11/metadata"
+ xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://projecthdata.org/hdata/schemas/2009/11/metadata file:/Users/andrewg/projects/hData/schemas/2009/11/section_metadata.xsd" MediaType="MediaType1" ContentType="http://www.oxygenxml.com/">
+    <PedigreeInfo>
+        <Source derived="false"/>
+        <Author>Dr. John Doe</Author>
+        <Organization>Anonymous Doctors Anonymous</Organization>
+    </PedigreeInfo>
+    <DocumentId>RandomDocumentId</DocumentId>
+    <Title>Random Title</Title>
+    <LinkedDocuments>
+        <Link>
+            <Target>http://www.hl7.org/</Target>
+        </Link>
+        <Link>
+            <Target>http://www.projecthdata.org/</Target>
+        </Link>
+    </LinkedDocuments>
+    <RecordDate>
+        <CreatedDateTime>2006-05-04T18:13:51.0Z</CreatedDateTime>
+        <Modified>
+            <ModifiedDateTime>2006-05-04T18:13:51.0Z</ModifiedDateTime>
+            <ModifiedDateTime>2006-05-04T18:13:51.0Z</ModifiedDateTime>
+        </Modified>
+    </RecordDate>
+    <Confidentiality>Confidentiality0</Confidentiality>
+    <AccessControl>
+    </AccessControl>
+    <Consent>
+    </Consent>
+</DocumentMetaData>

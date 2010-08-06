@@ -80,5 +80,14 @@ class SectionDocumentTest < Test::Unit::TestCase
       assert_equal 'test.xml', file.filename
       assert_equal 'application/xml', file.content_type
     end
+
+    should 'be able to create metadata from xml' do
+      fixture_file = File.new(File.join(File.dirname(__FILE__), '..', 'fixtures', 'metadata1.xml'))
+      ng = Nokogiri::XML(fixture_file)
+      doc = SectionDocument.new()
+      doc.create_metadata_from_xml(ng.root)
+      assert_equal 'Random Title', doc.title
+      assert_equal 'RandomDocumentId', doc.document_id
+    end
   end
 end
