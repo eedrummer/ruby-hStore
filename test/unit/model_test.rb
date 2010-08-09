@@ -93,6 +93,7 @@ class SectionDocumentTest < Test::Unit::TestCase
       assert_equal 1, doc.authors.size
       assert_equal 'Dr. John Doe', doc.authors.first
       assert_equal 5, doc.created_at.month
+      assert_equal 2007, doc.last_modified.year
     end
   end
 end

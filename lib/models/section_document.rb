@@ -29,6 +29,12 @@ class SectionDocument
     end
     created_text = ctx.first('/md:DocumentMetaData/md:RecordDate/md:CreatedDateTime').text
     self.created_at = Time.parse(created_text)
+    modifications = ctx.evaluate('/md:DocumentMetaData/md:RecordDate/md:Modified/md:ModifiedDateTime')
+    if modifications
+      self.last_modified = modifications.map {|m| Time.parse(m.text)}.max
+    else
+      self.last_modified = self.created_at
+    end
   end
 
   def create_document(content, filename, content_type)
