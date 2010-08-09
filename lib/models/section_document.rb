@@ -8,7 +8,7 @@ class SectionDocument
   field :title
   field :media_type
   field :content_type
-  field :file_id
+  field :file_id, :type => BSON::ObjectID
   field :document_id
   field :link_info, :type => Array
   field :authors, :type => Array
@@ -45,12 +45,12 @@ class SectionDocument
   
   def grid_document
     grid = Mongo::Grid.new(self.class.db)
-    grid.get(BSON::ObjectID.from_string(self.file_id))
+    grid.get(self.file_id)
   end
   
   def delete_grid_file
     grid = Mongo::Grid.new(self.class.db)
-    grid.delete(BSON::ObjectID.from_string(self.file_id))
+    grid.delete(self.file_id)
   end
   
   def replace_grid_file(content, filename, content_type)

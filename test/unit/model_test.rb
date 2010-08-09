@@ -40,7 +40,7 @@ class SectionDocumentTest < Test::Unit::TestCase
       doc = SectionDocument.new(:title => 'Test Document')
       doc.create_document('Text of a test document', 'test.txt', 'text/plain')
       
-      file = Mongo::Grid.new(SectionDocument.db).get(BSON::ObjectID.from_string(doc.file_id))
+      file = Mongo::Grid.new(SectionDocument.db).get(doc.file_id)
       assert file
       assert_equal 'Text of a test document', file.data
       assert_equal 'test.txt', file.filename
@@ -65,7 +65,7 @@ class SectionDocumentTest < Test::Unit::TestCase
       file_id = doc.file_id
       doc.destroy
       assert_raise Mongo::GridFileNotFound do
-        Mongo::Grid.new(SectionDocument.db).get(BSON::ObjectID.from_string(file_id))
+        Mongo::Grid.new(SectionDocument.db).get(file_id)
       end
     end
     
