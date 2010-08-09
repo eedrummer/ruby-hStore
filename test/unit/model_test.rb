@@ -88,6 +88,11 @@ class SectionDocumentTest < Test::Unit::TestCase
       doc.create_metadata_from_xml(ng.root)
       assert_equal 'Random Title', doc.title
       assert_equal 'RandomDocumentId', doc.document_id
+      assert_equal 2, doc.link_info.size
+      assert_equal 'http://www.hl7.org/', doc.link_info.first
+      assert_equal 1, doc.authors.size
+      assert_equal 'Dr. John Doe', doc.authors.first
+
     end
   end
 end

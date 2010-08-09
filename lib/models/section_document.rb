@@ -11,7 +11,7 @@ class SectionDocument
   field :file_id
   field :document_id
   field :link_info, :type => Array
-  field :pedigree_info
+  field :authors, :type => Array
   field :created_at, :type => DateTime
   field :last_modified, :type => DateTime
   #field :modifications, :type => Array
@@ -23,9 +23,13 @@ class SectionDocument
     ctx = NamespaceContext.new(node, 'md' => 'http://projecthdata.org/hdata/schemas/2009/11/metadata')
     self.title = ctx.first('/md:DocumentMetaData/md:Title').text
     self.document_id = ctx.first('/md:DocumentMetaData/md:DocumentId').text
-    links = ctx.first('/md:DocumentMetaData/md:LinkedDocuments/md:Link/md:Target')
+    links = ctx.evaluate('/md:DocumentMetaData/md:LinkedDocuments/md:Link/md:Target')
     if links
       self.link_info = links.map {|l| l.text}
+    end
+    author_nodes = ctx.evaluate('//md:PedigreeInfo/md:Author')
+    if author_nodes
+      self.authors = author_nodes.map {|a| a.text}.uniq
     end
   end
 
