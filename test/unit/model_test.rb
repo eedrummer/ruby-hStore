@@ -92,7 +92,7 @@ class SectionDocumentTest < Test::Unit::TestCase
       assert_equal 'http://www.hl7.org/', doc.link_info.first
       assert_equal 1, doc.authors.size
       assert_equal 'Dr. John Doe', doc.authors.first
-
+      assert_equal 5, doc.created_at.month
     end
   end
 end

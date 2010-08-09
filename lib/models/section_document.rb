@@ -14,10 +14,6 @@ class SectionDocument
   field :authors, :type => Array
   field :created_at, :type => DateTime
   field :last_modified, :type => DateTime
-  #field :modifications, :type => Array
-  field :confidentiality
-  field :access_control
-  field :consent
 
   def create_metadata_from_xml(node)
     ctx = NamespaceContext.new(node, 'md' => 'http://projecthdata.org/hdata/schemas/2009/11/metadata')
@@ -31,6 +27,8 @@ class SectionDocument
     if author_nodes
       self.authors = author_nodes.map {|a| a.text}.uniq
     end
+    created_text = ctx.first('/md:DocumentMetaData/md:RecordDate/md:CreatedDateTime').text
+    self.created_at = Time.parse(created_text)
   end
 
   def create_document(content, filename, content_type)
