@@ -95,5 +95,15 @@ class SectionDocumentTest < Test::Unit::TestCase
       assert_equal 5, doc.created_at.month
       assert_equal 2007, doc.last_modified.year
     end
+
+    should 'be able to store metadata' do
+      doc = SectionDocument.new(:title => 'Test Document')
+      doc.store_metadata('<DocumentMetaData/>')
+      
+      file = Mongo::Grid.new(SectionDocument.db).get(doc.metadata_id)
+      assert file
+      assert_equal '<DocumentMetaData/>', file.data
+      assert_equal 'application/xml', file.content_type
+    end
   end
 end

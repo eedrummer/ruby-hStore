@@ -3,7 +3,7 @@ class SectionDocument
   
   belongs_to_related :section
   
-  before_destroy :delete_grid_file
+  before_destroy :delete_grid_files
   
   field :title
   field :media_type
@@ -44,21 +44,39 @@ class SectionDocument
       self.save!
     end
   end
+
+  def store_metadata(metadata)
+    with_grid do |grid|
+      self.metadata_id = grid.put(metadata, :content_type => 'application/xml')
+      self.save!
+    end
+  end
   
   def grid_document
     with_grid do |grid|
       grid.get(self.file_id)
     end
   end
+
+  def metadata_document
+    with_grid do |grid|
+      grid.get(self.metadata_id)
+    end
+  end
   
-  def delete_grid_file
+  def delete_grid_files
     with_grid do |grid|
       grid.delete(self.file_id)
+      if self.metadata_id
+        grid.delete(self.metadata_id)	
+      end
     end
   end
   
   def replace_grid_file(content, filename, content_type)
-    self.delete_grid_file
+    with_grid do |grid|
+      grid.delete(self.file_id)
+    end
     self.create_document(content, filename, content_type)
   end
 
