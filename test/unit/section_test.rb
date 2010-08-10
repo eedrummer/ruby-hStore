@@ -29,5 +29,18 @@ class SectionTest < HDataTest
       assert_equal "/records/#{@record.id}/allergies/#{section.section_documents.first.id}", last_response.body
     end
     
+    should 'allow the POSTing of a section document and metadata' do
+      section_document = Rack::Test::UploadedFile.new(File.join(File.dirname(__FILE__), '..', 'fixtures', 'allergy1.xml'), 'application/xml')
+      metadata = Rack::Test::UploadedFile.new(File.join(File.dirname(__FILE__), '..', 'fixtures', 'metadata1.xml'), 'application/xml')
+      post "/records/#{@record.id}/allergies", {:type => 'document', :content => section_document, :metadata => metadata}
+      assert_equal 201, last_response.status
+      section = @record.sections.find_by_path('allergies')
+      assert_equal 1, section.section_documents.count
+      assert_equal "/records/#{@record.id}/allergies/#{section.section_documents.first.id}", last_response.body
+      doc = section.section_documents.first
+      assert_equal 'Random Title', doc.title
+      assert_equal 'RandomDocumentId', doc.document_id
+    end
+
   end
 end

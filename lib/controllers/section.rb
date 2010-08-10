@@ -18,6 +18,11 @@ module HStore
           if @section
             doc = SectionDocument.new()
             doc.create_document(params[:content][:tempfile], params[:content][:filename], params[:content][:type])
+	    if params[:metadata]
+	      metadata = params[:metadata][:tempfile].read
+	      doc.create_metadata_from_xml(Nokogiri::XML(metadata).root)
+	      doc.store_metadata(metadata)
+	    end
             doc.save
             @section.section_documents << doc
             status 201
