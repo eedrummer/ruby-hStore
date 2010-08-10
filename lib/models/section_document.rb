@@ -9,6 +9,7 @@ class SectionDocument
   field :media_type
   field :content_type
   field :file_id, :type => BSON::ObjectID
+  field :metadata_id, :type => BSON::ObjectID
   field :document_id
   field :link_info, :type => Array
   field :authors, :type => Array
@@ -38,24 +39,33 @@ class SectionDocument
   end
 
   def create_document(content, filename, content_type)
-    grid = Mongo::Grid.new(self.class.db)
-    self.file_id = grid.put(content, :filename => filename, :content_type => content_type)
-    self.save!
+    with_grid do |grid|
+      self.file_id = grid.put(content, :filename => filename, :content_type => content_type)
+      self.save!
+    end
   end
   
   def grid_document
-    grid = Mongo::Grid.new(self.class.db)
-    grid.get(self.file_id)
+    with_grid do |grid|
+      grid.get(self.file_id)
+    end
   end
   
   def delete_grid_file
-    grid = Mongo::Grid.new(self.class.db)
-    grid.delete(self.file_id)
+    with_grid do |grid|
+      grid.delete(self.file_id)
+    end
   end
   
   def replace_grid_file(content, filename, content_type)
     self.delete_grid_file
     self.create_document(content, filename, content_type)
+  end
+
+  private
+
+  def with_grid
+    yield Mongo::Grid.new(self.class.db)
   end
 end
 
