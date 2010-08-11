@@ -6,19 +6,22 @@ xml.feed(:xmlns => "http://www.w3.org/2005/Atom") do
   
   @section.section_documents.each do |document|
     xml.entry do
-      xml.id(url_for("/records/#{@record.id}/#{@section.path}/#{document.id}"))
-      xml.title(document.title)
-      xml.author do
-        xml.name("Tiny hData Store")
+      xml.id(document.document_id)
+      xml.link(:rel => "alternate", :href => url_for("/records/#{@record.id}/#{@section.path}/#{document.id}"))
+      if document.links
+      	document.links.each do |link|
+	  xml.link(:rel => 'related', :href => link)
+      	end
       end
-      xml.updated(document.updated_at.to_time.xmlschema)
+      xml.title(document.title)
+      document.authors.each do |author|
+	xml.author do
+	  xml.name(author)
+	end
+      end
+      xml.updated(document.last_modified.to_time.xmlschema)
       xml.content(:type => "text/xml") do
-        xml.DocumentMetaData(:xmlns => "http://projecthdata.org/hdata/schemas/2009/11/metadata") do
-          xml.DocumentId(document.id)
-          xml.RecordDate do
-            xml.CreatedDateTime(document.created_at.to_time.xmlschema)
-          end
-        end
+        xml << strip_declarations(document)
       end
     end
   end
