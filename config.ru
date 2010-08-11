@@ -14,6 +14,8 @@ Mongoid.configure do |config|
   config.master = Mongo::Connection.new.db('hStore')
 end
 
+require 'lib/namespace_context'
+
 # Set up the models
 Dir[File.dirname(__FILE__) + '/lib/models/*.rb'].each {|file| require file }
 

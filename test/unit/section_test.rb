@@ -6,6 +6,16 @@ class SectionTest < HDataTest
       @record = Record.create
       @record.extensions.create(:extension_id  => 'http://projecthdata.org/hdata/schemas/2009/06/allergy')
       @record.sections.create(:name => 'Allergies', :path => 'allergies', :extension_id  => 'http://projecthdata.org/hdata/schemas/2009/06/allergy')
+      @section = @record.sections.find_by_path('allergies')
+      @doc = SectionDocument.new()
+      fixture_file = File.new(File.join(File.dirname(__FILE__), '..', 'fixtures', 'allergy1.xml'))
+      @doc.create_document(fixture_file.read, 'allergy1.xml', 'application/xml')
+      fixture_file = File.new(File.join(File.dirname(__FILE__), '..', 'fixtures', 'metadata1.xml'))
+      ng = Nokogiri::XML(fixture_file)
+      @doc.create_metadata_from_xml(ng.root)
+      fixture_file.rewind
+      @doc.store_metadata(fixture_file)
+      @section.section_documents << @doc
     end
     
     should 'return an ATOM feed at the root' do
@@ -25,7 +35,7 @@ class SectionTest < HDataTest
       post "/records/#{@record.id}/allergies", {:type => 'document', :content => upload_file}
       assert_equal 201, last_response.status
       section = @record.sections.find_by_path('allergies')
-      assert_equal 1, section.section_documents.count
+      assert_equal 2, section.section_documents.count
       assert_equal "/records/#{@record.id}/allergies/#{section.section_documents.first.id}", last_response.body
     end
     
@@ -35,9 +45,9 @@ class SectionTest < HDataTest
       post "/records/#{@record.id}/allergies", {:type => 'document', :content => section_document, :metadata => metadata}
       assert_equal 201, last_response.status
       section = @record.sections.find_by_path('allergies')
-      assert_equal 1, section.section_documents.count
-      assert_equal "/records/#{@record.id}/allergies/#{section.section_documents.first.id}", last_response.body
-      doc = section.section_documents.first
+      assert_equal 2, section.section_documents.count
+      assert_equal "/records/#{@record.id}/allergies/#{section.section_documents[1].id}", last_response.body
+      doc = section.section_documents[1]
       assert_equal 'Random Title', doc.title
       assert_equal 'RandomDocumentId', doc.document_id
     end

@@ -8,8 +8,8 @@ xml.feed(:xmlns => "http://www.w3.org/2005/Atom") do
     xml.entry do
       xml.id(document.document_id)
       xml.link(:rel => "alternate", :href => url_for("/records/#{@record.id}/#{@section.path}/#{document.id}"))
-      if document.links
-      	document.links.each do |link|
+      if document.link_info
+      	document.link_info.each do |link|
 	  xml.link(:rel => 'related', :href => link)
       	end
       end

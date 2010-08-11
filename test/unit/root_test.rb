@@ -43,24 +43,9 @@ class RootTest < HDataTest
         assert_equal 400, last_response.status
       end
       
-      should "allow the registration of a new extension" do
-        post "/records/#{@record.id}", {:type => 'extension', 
-	      :extensionId => @allergy_namespace}
-        assert_equal 201, last_response.status
-        @record.reload
-        extension = @record.extensions.find_by_extension_id(@allergy_namespace)
-        assert extension
-      end
-      
-      should "not allow the registration of a duplicate extension" do
-        @record.extensions.create(:extension_id => @allergy_namespace)
-        post "/records/#{@record.id}", {:type => 'extension', :extensionId => @allergy_namespace}
-        assert_equal 409, last_response.status
-      end
-      
       should "allow the creation of a new section" do
         @record.extensions.create(:extension_id  => @allergy_namespace)
-        post "/records/#{@record.id}", {:type => 'section', :extensionId => @allergy_namespace, 
+        post "/records/#{@record.id}", {:extensionId => @allergy_namespace, 
                                         :path => 'allergies', :name => 'Allergies'}
         assert_equal 201, last_response.status
       end
