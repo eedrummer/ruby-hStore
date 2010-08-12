@@ -20,6 +20,14 @@ class DocumentTest < HDataTest
       product_element = doc.xpath('//a:allergy/a:product[text()="product0"]', 'a' => "http://projecthdata.org/hdata/schemas/2009/06/allergy")
       assert !product_element.empty?
     end
+
+    should "update metadata when new metadata is POSTed" do
+      metadata = Rack::Test::UploadedFile.new(File.join(File.dirname(__FILE__), '..', 'fixtures', 'metadata1.xml'), 'application/xml')
+      post "/records/#{@record.id}/#{@section.path}/#{@doc.id}", {:metadata => metadata}
+      assert_equal 201, last_response.status
+      @doc.reload
+      assert_equal 'Random Title', @doc.title
+    end
     
     should "be able to delete a document" do
       delete "/records/#{@record.id}/#{@section.path}/#{@doc.id}"

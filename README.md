@@ -18,7 +18,7 @@ The project uses [MongoDB](http://www.mongodb.org) to store data. The applicatio
 
 Finally you can run the application with:
 
-    rackup config.ru
+    ruby config.ru
 
 The application will run on http://localhost:4567. You need to do a POST to /records to create a new record to work with. It should respond with a status code of 201 stating the the record was created and a pointer to the location of the new record to work with. For working with the hData Network Transport, I would recommend using the [Poster Firefox Add-on](https://addons.mozilla.org/en-US/firefox/addon/2691).
 
@@ -28,10 +28,6 @@ Testing
 Just run:
 
     rake test
-
-To Do
------
-1. Implement metadata POSTing
 
 License
 -------
