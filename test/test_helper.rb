@@ -10,7 +10,16 @@ end
 
 Bundler.require(:default, :test)
 
-db = Mongo::Connection.new.db('hStore-test')
+db_host = nil
+
+if ENV['TEST_DB_HOST']
+  db_host = ENV['TEST_DB_HOST']
+else
+  db_host = 'localhost'
+end
+
+
+db = Mongo::Connection.new(db_host).db('hStore-test')
 
 db.drop_collection('records')
 
