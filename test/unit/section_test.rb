@@ -36,7 +36,9 @@ class SectionTest < HDataTest
       assert_equal 201, last_response.status
       section = @record.sections.find_by_path('allergies')
       assert_equal 2, section.section_documents.count
-      assert_equal "/records/#{@record.id}/allergies/#{section.section_documents.first.id}", last_response.body
+      new_section_document_id = last_response.body[-24..-1]
+      doc = section.section_documents.detect {|sd| sd.id.to_s == new_section_document_id}
+      assert doc
     end
     
     should 'allow the POSTing of a section document and metadata' do
@@ -46,8 +48,9 @@ class SectionTest < HDataTest
       assert_equal 201, last_response.status
       section = @record.sections.find_by_path('allergies')
       assert_equal 2, section.section_documents.count
-      assert_equal "/records/#{@record.id}/allergies/#{section.section_documents[1].id}", last_response.body
-      doc = section.section_documents[1]
+      new_section_document_id = last_response.body[-24..-1]
+      doc = section.section_documents.detect {|sd| sd.id.to_s == new_section_document_id}
+      assert doc
       assert_equal 'Random Title', doc.title
       assert_equal 'RandomDocumentId', doc.document_id
     end
