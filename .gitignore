@@ -1,3 +1,4 @@
 vendor*
 bin*
 .bundle
+*.DS_Store
