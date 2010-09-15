@@ -38,15 +38,28 @@ require 'lib/namespace_context'
 require 'lib/controllers/document'
 require 'lib/controllers/root'
 require 'lib/controllers/section'
-require 'lib/controllers/hstore'
+
+ROOT_DIR = File.join(File.dirname(__FILE__), '..')
 
 class HDataTest < Test::Unit::TestCase
   include Rack::Test::Methods
 
   def app
-    app = HStore::Application
-    app.set :environment, :test
-    app.set :root, File.join(File.dirname(__FILE__), '..')
+    app = Rack::Builder.new do
+      map '/' do
+        [HStore::Document, HStore::Root, HStore::SectionController].each_with_index do |clazz, i|
+          clazz.configure do |c|
+            c.set :environment, :test
+            c.set :root, ROOT_DIR
+          end
+          if i < 2
+            use clazz
+          else
+            run clazz 
+          end
+        end
+      end
+    end
     app
   end
   
