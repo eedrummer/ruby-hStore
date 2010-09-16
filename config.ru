@@ -1,5 +1,7 @@
 real_file = Kernel.const_get('File')
 
+$: << real_file.dirname(__FILE__)
+
 begin
   # Try to require the preresolved locked set of gems.
   require real_file.expand_path('../.bundle/environment', __FILE__)

@@ -6,7 +6,6 @@ gem 'sinatra', :require => 'sinatra/base'
 gem 'emk-sinatra-url-for', :require => 'sinatra/url_for'
 gem 'builder'
 
-gem 'bson_ext'
 gem 'mongo'
 gem 'mongoid', '2.0.0.beta.16'
 

@@ -1,3 +1,6 @@
+# Adding the root dir to the load path for Ruby 1.9.2 compatiblilty
+$: << File.join(File.dirname(__FILE__), '../..')
+
 require 'test/test_helper'
 
 class NamespaceContextTest < Test::Unit::TestCase
