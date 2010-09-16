@@ -1,6 +1,8 @@
+real_file = Kernel.const_get('File')
+
 begin
   # Try to require the preresolved locked set of gems.
-  require File.expand_path('../.bundle/environment', __FILE__)
+  require real_file.expand_path('../.bundle/environment', __FILE__)
 rescue LoadError
   # Fall back on doing an unlocked resolve at runtime.
   require "rubygems"
@@ -17,12 +19,22 @@ end
 require 'lib/namespace_context'
 
 # Set up the models
-Dir[File.dirname(__FILE__) + '/lib/models/*.rb'].each {|file| require file }
+Dir[real_file.dirname(__FILE__) + '/lib/models/*.rb'].each {|file| require file }
 
 # Load the web request handlers, order is significant
 require 'lib/controllers/document'
 require 'lib/controllers/root'
 require 'lib/controllers/section'
-require 'lib/controllers/hstore'
 
-HStore::Application.run!(:root => File.dirname(__FILE__))
+map '/' do 
+  [HStore::Document, HStore::Root, HStore::SectionController].each_with_index do |clazz, i|
+    clazz.configure do |c|
+      c.set :root, real_file.dirname(__FILE__)
+    end
+    if i < 2
+      use clazz
+    else
+      run clazz 
+    end
+  end
+end
