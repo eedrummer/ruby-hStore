@@ -47,7 +47,7 @@ module HStore
 
     helpers do
       def strip_declarations(section_document)
-        xml_document = Nokogiri::XML(section_document.metadata_document)
+        xml_document = Nokogiri::XML(section_document.metadata_document.read)
         str_io = StringIO.new
         xml_document.write_xml_to(str_io, :save_with => Nokogiri::XML::Node::SaveOptions::NO_DECLARATION)
         str_io.rewind

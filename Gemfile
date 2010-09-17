@@ -9,7 +9,7 @@ gem 'builder'
 gem 'mongo'
 gem 'mongoid', '2.0.0.beta.16'
 
-gem 'nokogiri'
+gem 'nokogiri', '1.5.0.beta.2'
 
 group :test do
   gem 'rack-test', :require => 'rack/test'

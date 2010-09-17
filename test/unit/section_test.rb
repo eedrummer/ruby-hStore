@@ -5,6 +5,7 @@ require 'test/test_helper'
 
 class SectionTest < HDataTest
   context "A section of an hData Record" do
+    # TODO: Clean up the use of fixture_file
     setup do
       @record = Record.create
       @record.extensions.create(:extension_id  => 'http://projecthdata.org/hdata/schemas/2009/06/allergy')
@@ -16,7 +17,8 @@ class SectionTest < HDataTest
       fixture_file = File.new(File.join(File.dirname(__FILE__), '..', 'fixtures', 'metadata1.xml'))
       ng = Nokogiri::XML(fixture_file)
       @doc.create_metadata_from_xml(ng.root)
-      fixture_file.rewind
+      # Rereading the fixture_file because rewind seems to kill JRuby
+      fixture_file = File.new(File.join(File.dirname(__FILE__), '..', 'fixtures', 'metadata1.xml'))
       @doc.store_metadata(fixture_file)
       @section.section_documents << @doc
     end
